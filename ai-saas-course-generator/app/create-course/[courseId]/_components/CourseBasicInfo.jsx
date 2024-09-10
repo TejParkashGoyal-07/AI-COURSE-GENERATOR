@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import EditCourse from './EditCourse';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -9,7 +9,11 @@ import { eq } from 'drizzle-orm';
 function CourseBasicInfo({course,refreshData}) {
   const[selectedFile,setSelectedFile]=useState();
   const onFileSelected=async(event)=>{
-
+    useEffect(()=>{
+      if(course){
+        setSelectedFile(course?.courseBanner)
+      }
+    },[course])
     const file=event.target.files[0];
     setSelectedFile(URL.createObjectURL(file))
     const fileName=Date.now()+".jpg"
