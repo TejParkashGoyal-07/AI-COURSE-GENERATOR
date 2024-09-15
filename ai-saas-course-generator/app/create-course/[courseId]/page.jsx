@@ -7,10 +7,12 @@ import CourseBasicInfo from "./_components/CourseBasicInfo";
 import CourseDetails from "./_components/CourseDetails";
 import ChaptersChart from "./_components/ChaptersChart";
 // Assuming Button is either a custom or a library component, import it
+
 import { Button } from "your-button-library"; // Replace with the actual path
 import service from "../../../configs/service";
 import { useRouter } from "next/router";
 import { CourseList } from '../../../../configs/schema';
+import { db } from "../../../@/configs/db";
 function CourseLayout({ params }) {
   const { user } = useUser();
   const router=useRouter();
@@ -66,6 +68,9 @@ function CourseLayout({ params }) {
         } catch (e) {
           console.log(e);
         }
+        await db.update(CourseList).set({
+          publish:true
+        })
         router.replace('/create-course/'+course?.courseId+"/finish")
       }
     });

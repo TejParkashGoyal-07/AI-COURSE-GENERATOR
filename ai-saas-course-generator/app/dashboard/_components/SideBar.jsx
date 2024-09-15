@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineHome } from "react-icons/ai";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { RiStackFill } from "react-icons/ri";
@@ -10,7 +10,9 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Progress } from '../../../components/ui/progress';
 
+import { UserCourseListContext } from '../../_context/UserCourseListContext';
 function SideBar() {
+    const{userCourseList,setUserCourseList}=useContext(UserCourseListContext)
     const Menu = [
         {
             id: 1,
@@ -56,8 +58,8 @@ function SideBar() {
                 ))}
             </ul>
             <div className='absolute bottom-10 w-[80%]'>
-            <Progress value={33} />
-            <h2 className='text-sm my-2'>3 Out Of 5  Courses Created</h2>
+            <Progress value={(userCourseList?.length/5)*100} />
+            <h2 className='text-sm my-2'>{userCourseList?.length} Out Of 5  Courses Created</h2>
             <h2 className='text-xs bg-gray-500'>Upgrade To Create More Courses</h2>
             </div>
         </div>

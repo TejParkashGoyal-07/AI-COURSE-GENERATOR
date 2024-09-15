@@ -5,13 +5,15 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { CourseList } from '../../../../configs/schema';
+import { HiOutlineClipboardCheck } from 'react-icons/hi';
 import CourseBasicInfo from '../_components/CourseBasicInfo';
 
-function FinishScreen({params}) {
+function FinishScreen({ params }) {
     const { user } = useUser();
     const router = useRouter();
     const [course, setCourse] = useState([]);
-    const [loading, setLaoding] = useState(true)
+    const [loading, setLaoding] = useState(true);
+
     useEffect(() => {
         if (params && user) {
             GetCourse();
@@ -35,15 +37,22 @@ function FinishScreen({params}) {
             console.error("Error fetching course:", error);
         }
     };
+
     return (
-
-        <div className='px-10 md:px-20  lg:px-44 my-7'>
-            <h2 className='text-center font-bold text-2xl my-3'>Congrats!Your Course is Ready</h2>
-
-            <h2>{}</h2>
-            <CourseBasicInfo course={course}refreshData={()=>console.log(result)}/>
-        </div>
-    )
+        <div className='px-10 md:px-20 lg:px-44 my-7'>
+            <h2 className='text-center text-gray-400 border p-2 rounded flex-gap-5 items-center'>
+                {`${process.env.NEXT_PUBLIC_HOST_NAME}/course/view/${course?.courseId}`}
+                <HiOutlineClipboardCheck 
+                    className='h-6 w-6 cursor-pointer' 
+                    onClick={async () => 
+                        await navigator.clipboard.writeText(
+                            `${process.env.NEXT_PUBLIC_HOST_NAME}/course/view/${course?.courseId}`
+                        )
+                    }
+                />
+            </h2>
+        </div> 
+    );
 }
 
-export default FinishScreen
+export default FinishScreen;

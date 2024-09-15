@@ -2,7 +2,7 @@ import React from 'react'
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { HiOutlineClock } from "react-icons/hi";
 import EditChapters from './EditChapters';
-function ChaptersChart({course,refreshData}) {
+function ChaptersChart({course,refreshData,edit=true}) {
   return (
     <div className='mt-3'>
       <h2 className='font-medium text-xl'>
@@ -14,7 +14,7 @@ function ChaptersChart({course,refreshData}) {
           <div className='flex gap-5 items-center'>
             <h2 className='bg-primary  flex-none h-10 w-10 text-white rounded-full text-center p-2'>{index+1}</h2>
             <div>
-              <h2 className='font-medium text-lg'>{chapter?.name}<EditChapters course={course} index={index} refreshData={refreshData}/></h2>
+              {edit&&<h2 className='font-medium text-lg'>{chapter?.name}<EditChapters course={course} index={index} refreshData={refreshData}/></h2>}
               <p className='text-sm text-gray-500'>{chapter?.about}</p>
               <p className='flex gap-2 text-primary items-center'><HiOutlineClock />{chapter?.duration}</p>
             </div>

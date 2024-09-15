@@ -3,9 +3,13 @@
 import React from 'react';
 import SideBar from './_components/SideBar';
 import Header from '../_components/Header';
+import { UserCourseListContext } from '../_context/UserCourseListContext';
+import { useState } from 'react';
 
 function DashboardLayout({ children }) {
+  const[userCourseList,setUserCourseList]=useState([])
   return (
+    <UserCourseListContext.Provider value={{userCourseList,setUserCourseList}}>
     <div className="flex">
       <div className="md:w-64 hidden md:block">
         <SideBar />
@@ -15,6 +19,7 @@ function DashboardLayout({ children }) {
         <div className='p-10'>{children}</div>
       </div>
     </div>
+    </UserCourseListContext.Provider>
   );
 }
 
